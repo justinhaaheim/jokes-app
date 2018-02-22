@@ -1,5 +1,7 @@
 /* eslint-disable import/first */
 require('dotenv').config()
+const assert = require('assert')
+assert(process.env.DB_SSL === 'true' || process.env.DB_SSL === 'false')
 
 import path from 'path'
 import express from 'express'
@@ -20,10 +22,10 @@ const app = express()
 
 const pgSession = connectPgSimple(session)
 const pgPool = new pg.Pool({
-  host: 'localhost',
-  port: 5432,
-  database: 'interview-apprenticeship-b',
-  ssl: false,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  ssl: process.env.DB_SSL.toLowerCase() === 'true',
 })
 
 app.use(
@@ -46,7 +48,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, '../views'))
 
 if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'))
@@ -55,6 +57,10 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.static(path.join(ROOT_DIR, '/public')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.get('/', (req, res) => {
+  res.send("Hallo!")
+})
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
@@ -75,5 +81,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   // TODO: add dynamic baseURL
-  console.log(`Listening on http://localhost:${PORT}...`)
+  console.log(`🌍 Listening on http://localhost:${PORT}...`)
 })
