@@ -10,10 +10,11 @@
   "scripts": {
     "start": "babel-node server",
     "server": "nodemon --exec babel-node -- server",
-    "client": "npm run start --prefix client",    
+    "client": "npm run start --prefix client",
     "db:drop": "node scripts/dbDrop.js",
     "db:create": "node scripts/dbCreate.js",
     "db:schema": "node scripts/dbSchema.js",
+    "db:init": "npm run db:drop && npm run db:create && npm run db:schema",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,10 +29,12 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "morgan": "^1.9.0",
+    "node-fetch": "^2.0.0",
     "nodemon": "^1.15.1",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
-    "pg": "^7.4.1"
+    "pg": "^7.4.1",
+    "pg-promise": "^8.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

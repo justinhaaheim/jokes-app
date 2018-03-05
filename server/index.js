@@ -2,16 +2,15 @@
 require('dotenv').config()
 const assert = require('assert')
 assert(process.env.DB_SSL === 'true' || process.env.DB_SSL === 'false')
+assert(process.env.DB_NAME && process.env.DB_NAME.length > 0)
 
 import path from 'path'
 import express from 'express'
 import bodyParser from 'body-parser'
 import session from 'express-session'
-import pg from 'pg'
-import connectPgSimple from 'connect-pg-simple'
 import logger from 'morgan'
-import passport from 'passport'
 import 'ejs'
+import apiRouter from '../routes/api'
 
 // TODO: assert presence of necessary env variables
 
@@ -20,32 +19,14 @@ const ROOT_DIR = path.resolve(__dirname, '../')
 
 const app = express()
 
-const pgSession = connectPgSimple(session)
-const pgPool = new pg.Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  ssl: process.env.DB_SSL.toLowerCase() === 'true',
-})
-
 app.use(
   session({
-    // eslint-disable-next-line new-cap
-    store: new pgSession({
-      pool: pgPool, // Connection pool
-      tableName: 'sessions', // Use another table-name than the default "session" one
-    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {maxAge: 30 * 24 * 60 * 60 * 1000}, // 30 days
   })
 )
-
-// app.use(flash())
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '../views'))
@@ -58,9 +39,7 @@ app.use(express.static(path.join(ROOT_DIR, '/public')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/api/test', (req, res) => {
-  res.send("Hallo!")
-})
+app.use('/api', apiRouter)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
