@@ -8,13 +8,13 @@
     "npm": "5.4.2"
   },
   "scripts": {
-    "start": "babel-node src/server",
-    "server": "nodemon --exec babel-node -- src/server",
-    "db:drop": "node src/scripts/dbDrop.js",
-    "db:create": "node src/scripts/dbCreate.js",
-    "db:schema": "node src/scripts/dbSchema.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
+    "start": "babel-node server",
+    "server": "nodemon --exec babel-node -- server",
+    "client": "npm run start --prefix client",    
+    "db:drop": "node scripts/dbDrop.js",
+    "db:create": "node scripts/dbCreate.js",
+    "db:schema": "node scripts/dbSchema.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -36,6 +36,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "concurrently": "^3.5.1",
     "eslint": "^4.18.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",

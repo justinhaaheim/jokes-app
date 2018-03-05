@@ -58,7 +58,7 @@ app.use(express.static(path.join(ROOT_DIR, '/public')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
+app.get('/api/test', (req, res) => {
   res.send("Hallo!")
 })
 

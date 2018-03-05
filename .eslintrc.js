@@ -11,6 +11,7 @@ module.exports = {
     "quotes": 1,
     "prefer-destructuring": 1,
     "func-names": 0,
+    "react/jsx-filename-extension": 0,
     "comma-dangle": ["error", {
       "functions": "never",
       "objects": "always-multiline",
