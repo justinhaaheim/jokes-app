@@ -1,8 +1,8 @@
 {
-  "name": "jdh-app",
+  "name": "rithm-cheezjokes",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server/ndex.js",
+  "main": "server/index.js",
   "engines": {
     "node": "8.7.0",
     "npm": "5.4.2"
@@ -11,19 +11,18 @@
     "start": "babel-node server",
     "server": "nodemon --exec babel-node -- server",
     "client": "npm run start --prefix client",
+    "build": "npm install --prefix client && npm run build --prefix client",
     "db:drop": "node scripts/dbDrop.js",
     "db:create": "node scripts/dbCreate.js",
     "db:schema": "node scripts/dbSchema.js",
     "db:init": "npm run db:drop && npm run db:create && npm run db:schema",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "Justin Haaheim",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "connect-pg-simple": "^4.2.1",
     "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
@@ -31,9 +30,6 @@
     "morgan": "^1.9.0",
     "node-fetch": "^2.0.0",
     "nodemon": "^1.15.1",
-    "passport": "^0.4.0",
-    "passport-github": "^1.1.0",
-    "pg": "^7.4.1",
     "pg-promise": "^8.1.1"
   },
   "devDependencies": {

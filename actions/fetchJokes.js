@@ -18,6 +18,8 @@ function fetchJoke() {
 }
 
 export default function fetchJokes(n) {
+  // TODO: this approach currently fails if any of the first 40 requests fail, which they often do. Refactor this so a single error doesn't kill the whole batch of requests.
+
   const overshootFactor = 2
   const jokes = []
   for (let i = 0; i < n * overshootFactor; i++) {

@@ -3,6 +3,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable'
 
 class Joke extends Component {
   render() {
+    // eslint-disable-next-line
     const { body, jokeId } = this.props
 
     return (

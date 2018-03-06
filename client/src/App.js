@@ -16,6 +16,12 @@ class App extends Component {
 
   componentDidMount() {
     fetch("/api/jokes?count=20")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response not OK for fetch to internal api')
+        }
+        return res
+      })
       .then(res => res.json())
       .then(jokes => {
         this.setState({
