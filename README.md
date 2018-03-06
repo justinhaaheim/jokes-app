@@ -1,4 +1,4 @@
-# Jokes App for Rithm School
+# Jokes App
 
 Author: Justin Haaheim
 
