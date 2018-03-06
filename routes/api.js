@@ -1,51 +1,28 @@
 import { Router } from 'express'
-import fetch from 'node-fetch'
-import { fetchJokesAndSeed } from '../actions'
+import { fetchJokes } from '../actions'
 
 const router = Router()
-const jokeAPI = 'https://icanhazdadjoke.com'
 
-const getJoke = () => fetch(jokeAPI, {
-  headers: {
-    Accept: 'application/json',
-  },
-}).then(fetchResponse => fetchResponse.json())
-
-const getJokes = (n) => {
-  const overshootFactor = 3
-  const jokes = []
-  for (let i = 0; i < n * overshootFactor; i++) {
-    jokes.push(getJoke())
-  }
-
-  return Promise.all(jokes)
-    .then(async (jokes) => {
-      const result = new Map()
-      jokes.forEach((e) => {
-        result.set(e.id, e)
-      })
-      while (result.size < n) {
-        const newJoke = await getJoke()
-        result.set(newJoke.id, newJoke)
-      }
-      return Array.from(result.values()).slice(0, n)
-    })
-}
-
-router.get('/test', (req, res, next) => {
-  fetchJokesAndSeed(4)
-    .then(jokes => res.json(jokes))
-    .catch(next)
-})
+const randomJokesCount = 20
 
 router.get('/jokes', (req, res, next) => {
+  // TODO:
+  // If not sorted:
+  // Get n random jokes from api
+  // Get corresponding entries for any jokes that are already in db, including upvotes & downvotes
+  // Send json
+  // Insert new jokes into db
+  //
+  // If sorted:
+  // get from database
+  // send as json
+  //
+  // If fetch error, send json with { error: ... }
+  
   const { sortBy } = req.params
   const count = req.params.count || 5
 
-  // if (sortBy) {
-  //
-  // }
-  getJokes(20)
+  fetchJokes(randomJokesCount)
     .then(jokes => res.json(jokes))
     .catch(next)
 })

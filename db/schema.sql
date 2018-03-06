@@ -10,6 +10,7 @@ CREATE TABLE sessions (
 CREATE TABLE jokes (
   id SERIAL PRIMARY KEY,
   api_id TEXT UNIQUE NOT NULL,
+  joke TEXT NOT NULL,
   upvotes INTEGER DEFAULT 0,
   downvotes INTEGER DEFAULT 0
 );

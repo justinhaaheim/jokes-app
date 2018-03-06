@@ -1,6 +1,6 @@
 # Jokes App for Rithm School
 
-Author: Justin Haaheim
+Author: Justin Haaheimf
 
 # Challenge
 
@@ -50,3 +50,7 @@ Routes:
 - GET /api/jokes?sortby=(best|worst)
 - PUT /api/jokes/thumbsup/:jokeid
 - PUT /api/jokes/thumbsdown/:jokeid
+
+TODO:
+- Move thinks like `const jokeAPI = 'https://icanhazdadjoke.com'` and `overshootFactor` into centralized config
+- Complete /api/jokes route to handle sortBy param, and if there is an error while fetching

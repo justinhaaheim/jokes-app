@@ -1,5 +1,6 @@
-import db from '../db'
 import fetch from 'node-fetch'
+import db from '../db'
+import addJokes from './addJokes'
 
 const jokeAPI = 'https://icanhazdadjoke.com'
 
@@ -51,8 +52,5 @@ const fetchPagesOfJokes = (n) => {
 
 export default async function fetchJokesAndSeed(n) {
   const jokes = await fetchPagesOfJokes(n)
-  
-  console.log('Fetched jokes:')
-  console.log(jokes)
-  // return db.oneOrNone('SELECT * FROM jokes WHERE api_id = $1', [api_id])
+  return addJokes(jokes)
 }
